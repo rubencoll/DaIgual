@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.servlet.ServletException;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface ConnectionFactory {
     
     
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException;
+    public Connection getConnection() throws SQLException, ClassNotFoundException, ServletException;
     public void close(Connection connection)throws SQLException, ClassNotFoundException;
    
 
