@@ -29,7 +29,7 @@ public class ConnectionFactoryImplDataSource implements ConnectionFactory {
             }
 
             // actual jndi name is "jdbc/postgres"
-            datasource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/postgres");
+            datasource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/banco");
 
             if (datasource == null) {
                 String message = "Could not find our DataSource in DBBroker. We're about to have problems.";
