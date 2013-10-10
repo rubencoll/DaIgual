@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class SucursalBancariaDAO {
     public SucursalBancariaDAO() throws ClassNotFoundException, SQLException {
     }
 
-    public SucursalBancaria read(int idSucursalBancaria) throws SQLException, ClassNotFoundException {
+    public SucursalBancaria read(int idSucursalBancaria) throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
@@ -68,7 +69,7 @@ public class SucursalBancariaDAO {
 
     }
 
-    public void insert(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException {
+    public void insert(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
@@ -86,7 +87,7 @@ public class SucursalBancariaDAO {
         connection.close();
     }
 
-    public void update(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException {
+    public void update(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
@@ -104,7 +105,7 @@ public class SucursalBancariaDAO {
         connection.close();
     }
 
-    public void delete(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException {
+    public void delete(SucursalBancaria sucursalBancaria) throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
@@ -124,7 +125,7 @@ public class SucursalBancariaDAO {
         connection.close();
     }
 
-    public List<SucursalBancaria> findAll() throws SQLException, ClassNotFoundException {
+    public List<SucursalBancaria> findAll() throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
@@ -156,7 +157,7 @@ public class SucursalBancariaDAO {
         return sucursalesBancarias;
     }
 
-    public List<SucursalBancaria> findByCodigo(String codigo) throws SQLException, ClassNotFoundException {
+    public List<SucursalBancaria> findByCodigo(String codigo) throws SQLException, ClassNotFoundException, ServletException {
 
         Connection connection = connectionFactory.getConnection();
 
