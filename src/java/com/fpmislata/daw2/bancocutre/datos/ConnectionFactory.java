@@ -17,8 +17,7 @@ import javax.servlet.ServletException;
  */
 public interface ConnectionFactory {
     
-    
-    
+
 
     public Connection getConnection() throws SQLException, ClassNotFoundException, ServletException;
     public void close(Connection connection)throws SQLException, ClassNotFoundException;

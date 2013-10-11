@@ -22,8 +22,10 @@ import javax.servlet.ServletException;
 //  Database credentials
 public class EntidadBancariaDAO {
 
-    ConnectionFactory connectionFactory = new ConnectionFactoryImplJDBC();
-
+    //ConnectionFactory connectionFactory = new ConnectionFactoryImplJDBC();
+    
+    ConnectionFactory connectionFactory = new ConnectionFactoryImplDataSource();
+    
     public EntidadBancariaDAO() throws ClassNotFoundException, SQLException {
     }
 
