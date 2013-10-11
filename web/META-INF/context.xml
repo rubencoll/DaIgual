@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/DaIgual"/>
+<Context antiJARLocking="true" path="/DaIgual" >
 <Resource name="jdbc/banco" auth="Container"
-            type="javax.sql.DataSource"
-            driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/banco"
-            username="root"
-            password="root"
-            maxActive="20"
-            maxIdle="5"
-            maxWait="-1"
-            removeAbandoned="true"
-            removeAbandonedTimeout="60"
-            logAbandoned="true"
-            />
+          type="javax.sql.DataSource"
+          driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://localhost:3306/banco"
+          username="root"
+          password="root"
+          maxActive="20"
+          maxIdle="5"
+          maxWait="30"
+          validationQuery="SELECT 1 FROM dual"
+/>
+</Context>
