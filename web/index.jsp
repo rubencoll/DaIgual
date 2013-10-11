@@ -1,3 +1,4 @@
+<%@page import="com.fpmislata.daw2.bancocutre.datos.EntidadBancariaDAOImplJDBC"%>
 <%@page import="com.fpmislata.daw2.bancocutre.negocio.TipoEntidadBancaria"%>
 <%@page import="com.fpmislata.daw2.bancocutre.datos.EntidadBancariaDAO"%>
 <%@page import="com.fpmislata.daw2.bancocutre.negocio.EntidadBancaria"%>
@@ -13,7 +14,7 @@
 
     int idEntidadBancariaBuscarda = 3;
 
-    EntidadBancariaDAO entidadBancariaDAO = new EntidadBancariaDAO();
+    EntidadBancariaDAO entidadBancariaDAO = new EntidadBancariaDAOImplJDBC();
 
     EntidadBancaria entidadBancariaBuscada = new EntidadBancaria();
     entidadBancariaBuscada = entidadBancariaDAO.read(idEntidadBancariaBuscarda);
@@ -58,6 +59,11 @@
         <h1>Entidades Bancarias</h1>
 
         <table class="table">
+            <th>IDENTIFICADOR</th>
+            <th>CODIGO</th>
+            <th>NOMBRE</th>
+            <th>TIPO</th>
+            <th>CIF</th>
             <%
 
                 for (EntidadBancaria entidadBancaria : entidadesBancarias) {

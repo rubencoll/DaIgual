@@ -23,18 +23,16 @@ public class ConnectionFactoryImplDataSource implements ConnectionFactory {
 
             InitialContext initialContext = new InitialContext();
             if (initialContext == null) {
-                String message = "There was no InitialContext in DBBroker. We're about to have some problems.";
-                System.err.println("*** " + message);
-                throw new Exception(message);
+                
+                throw new Exception("There was no InitialContext in DBBroker. We're about to have some problems.");
             }
 
             // actual jndi name is "jdbc/postgres"
             datasource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/banco");
 
             if (datasource == null) {
-                String message = "Could not find our DataSource in DBBroker. We're about to have problems.";
-                System.err.println("*** " + message);
-                throw new Exception(message);
+                
+                throw new Exception("Could not find our DataSource in DBBroker. We're about to have problems.");
             }
         } catch (Exception e) {
             throw new ServletException(e.getMessage());
