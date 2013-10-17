@@ -50,8 +50,8 @@
     //Para pasar un dato por el Get de la URL 
 
     String nombreB = request.getParameter("nombre");
-     
-    EntidadBancaria entidadBancariaBuscadaGet = new EntidadBancaria();
+    List<EntidadBancaria> entidadBancariaBuscadaGet = new ArrayList<EntidadBancaria>();
+
     entidadBancariaBuscadaGet = entidadBancariaDAO.findByNombre(nombreB);
 
 
@@ -65,8 +65,30 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/bootstrap.css" rel="stylesheet" >
+        <style type="text/css">
+            .cCentrado{
+                text-align: center;
+                border:1px solid black;
+                border-color: blue ;
+                width: 300px;
+                height: 50px;
+                padding-top: 15px;
+                margin:auto; 
+                border-radius: 20px;
+                background-color: skyblue;
+            }
+        </style>
     </head>
     <body>
+        <h1>Buscar Entidad Bancaria</h1>
+        <br /><br />
+        <div class="cCentrado" >
+            <form class="form-search" method="GET" action="index.jsp">
+                <input name="nombre" type="text" class="input-medium search-query">
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>
+        <hr>
         <h1>Entidades Bancarias</h1>
 
         <table class="table">
@@ -99,13 +121,20 @@
             <th>NOMBRE</th>
             <th>TIPO</th>
             <th>CIF</th>
+                <%
+
+                    for (EntidadBancaria entidadBancaria : entidadBancariaBuscadaGet) {
+                %>
             <tr>
-                <td><%= entidadBancariaBuscadaGet.getIdEntidadBancaria()%></td>
-                <td><%= entidadBancariaBuscadaGet.getCodigoEntidadBancaria()%></td>
-                <td><%= entidadBancariaBuscadaGet.getNombre()%></td>
-                <td><%= entidadBancariaBuscadaGet.getTipoEntidadBancaria()%></td>       
-                <td><%= entidadBancariaBuscadaGet.getCif()%></td>
+                <td><%= entidadBancaria.getIdEntidadBancaria()%></td>
+                <td><%= entidadBancaria.getCodigoEntidadBancaria()%></td>
+                <td><%= entidadBancaria.getNombre()%></td>
+                <td><%= entidadBancaria.getTipoEntidadBancaria()%></td>       
+                <td><%= entidadBancaria.getCif()%></td>
             </tr>
+            <%
+                }
+            %>
         </table>
     </body>
 </html>

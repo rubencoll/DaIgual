@@ -253,26 +253,38 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
     }
 
     @Override
-    public EntidadBancaria findByNombre(String nombre) {
-        
+    public List<EntidadBancaria> findByNombre(String nombre) {
+
         try {
 
             Connection connection;
 
             connection = connectionFactory.getConnection();
 
-            EntidadBancaria entidadBancaria;
+            List<EntidadBancaria> entidadesBancarias = new ArrayList<>();
 
-            String selectSQL = "SELECT * FROM entidadbancaria WHERE nombre LIKE ?";
+            String selectSQL;
+            
+            PreparedStatement preparedStatementSelect;
+            
+            if ( (nombre==null) || (nombre.trim().isEmpty())) {
 
-            PreparedStatement preparedStatementSelect = connection.prepareStatement(selectSQL);
-            preparedStatementSelect.setString(1, "%"+nombre+"%");
+                selectSQL = "SELECT * FROM entidadbancaria";
+                preparedStatementSelect = connection.prepareStatement(selectSQL);
+
+            } else {
+                selectSQL = "SELECT * FROM entidadbancaria WHERE nombre LIKE ?";
+
+                preparedStatementSelect = connection.prepareStatement(selectSQL);
+                preparedStatementSelect.setString(1, "%" + nombre + "%");
+             
+            }
 
             ResultSet resultSet = preparedStatementSelect.executeQuery();
 
-            if (resultSet.next() == true) {
+            while (resultSet.next()) {
 
-                entidadBancaria = new EntidadBancaria();
+                EntidadBancaria entidadBancaria = new EntidadBancaria();
 
                 int idEntidadBancaria = resultSet.getInt("idEntidadBancaria");
                 String codigoEntidadBancaria = resultSet.getString("codigoEntidadBancaria");
@@ -286,19 +298,12 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
                 entidadBancaria.setCif(cif);
                 entidadBancaria.setTipoEntidadBancaria(TipoEntidadBancaria.valueOf(tipoEntidadBancaria));
 
-                if (resultSet.next() == true) {
-                    throw new RuntimeException("Hay mas de una entidad Bancaria con codigo: " + codigoEntidadBancaria);
-                    // System.out.println("Hay mas de 1");
-                }
-
-            } else {    //Si no existe retornara un NULL
-
-                entidadBancaria = null;
+                entidadesBancarias.add(entidadBancaria);
 
             }
 
             connection.close();
-            return entidadBancaria;
+            return entidadesBancarias;
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
