@@ -33,9 +33,10 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
     @Override
     public EntidadBancaria read(Integer idEntidadBancaria) {
 
-        Connection connection;
-
         try {
+
+            Connection connection;
+
             connection = connectionFactory.getConnection();
 
             EntidadBancaria entidadBancaria;
@@ -79,14 +80,15 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
     @Override
     public void insert(EntidadBancaria entidadBancaria) {
 
-        Connection connection;
         try {
+
+            Connection connection;
 
             connection = connectionFactory.getConnection();
 
@@ -105,14 +107,16 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
     @Override
     public void update(EntidadBancaria entidadBancaria) {
 
-        Connection connection;
         try {
+
+            Connection connection;
+
             connection = connectionFactory.getConnection();
 
             String updateSQL = "UPDATE entidadBancaria SET codigoEntidadBancaria = ?, nombre = ?, cif = ?, tipoEntidadBancaria = ? WHERE idEntidadBancaria = ?";
@@ -131,14 +135,16 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
     @Override
     public void delete(EntidadBancaria entidadBancaria) {
 
-        Connection connection;
         try {
+
+            Connection connection;
+
             connection = connectionFactory.getConnection();
 
             String deleteSQL = "DELETE FROM entidadBancaria WHERE idEntidadBancaria = ?";
@@ -158,15 +164,15 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
     @Override
     public List<EntidadBancaria> findAll() {
 
-        Connection connection;
-
         try {
+
+            Connection connection;
 
             connection = connectionFactory.getConnection();
             List<EntidadBancaria> entidadesBancarias = new ArrayList<>();
@@ -199,14 +205,16 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
             return entidadesBancarias;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
     @Override
     public List<EntidadBancaria> findByCodigo(String codigo) {
 
-        Connection connection;
         try {
+
+            Connection connection;
+
             connection = connectionFactory.getConnection();
 
             List<EntidadBancaria> entidadesBancarias = new ArrayList<>();
@@ -241,7 +249,59 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
             return entidadesBancarias;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        } 
+        }
     }
 
+    @Override
+    public EntidadBancaria findByNombre(String nombre) {
+        
+        try {
+
+            Connection connection;
+
+            connection = connectionFactory.getConnection();
+
+            EntidadBancaria entidadBancaria;
+
+            String selectSQL = "SELECT * FROM entidadbancaria WHERE nombre LIKE ?";
+
+            PreparedStatement preparedStatementSelect = connection.prepareStatement(selectSQL);
+            preparedStatementSelect.setString(1, "%"+nombre+"%");
+
+            ResultSet resultSet = preparedStatementSelect.executeQuery();
+
+            if (resultSet.next() == true) {
+
+                entidadBancaria = new EntidadBancaria();
+
+                int idEntidadBancaria = resultSet.getInt("idEntidadBancaria");
+                String codigoEntidadBancaria = resultSet.getString("codigoEntidadBancaria");
+                nombre = resultSet.getString("nombre");
+                String cif = resultSet.getString("cif");
+                String tipoEntidadBancaria = resultSet.getString("tipoEntidadBancaria");
+
+                entidadBancaria.setIdEntidadBancaria(idEntidadBancaria);
+                entidadBancaria.setCodigoEntidadBancaria(codigoEntidadBancaria);
+                entidadBancaria.setNombre(nombre);
+                entidadBancaria.setCif(cif);
+                entidadBancaria.setTipoEntidadBancaria(TipoEntidadBancaria.valueOf(tipoEntidadBancaria));
+
+                if (resultSet.next() == true) {
+                    throw new RuntimeException("Hay mas de una entidad Bancaria con codigo: " + codigoEntidadBancaria);
+                    // System.out.println("Hay mas de 1");
+                }
+
+            } else {    //Si no existe retornara un NULL
+
+                entidadBancaria = null;
+
+            }
+
+            connection.close();
+            return entidadBancaria;
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

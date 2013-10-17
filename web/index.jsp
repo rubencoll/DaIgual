@@ -16,7 +16,7 @@
 
     EntidadBancariaDAO entidadBancariaDAO = new EntidadBancariaDAOImplJDBC();
     //GenericDAO genericDao = new EntidadBancariaDAOImplJDBC();
-    
+
     EntidadBancaria entidadBancariaBuscada = new EntidadBancaria();
     entidadBancariaBuscada = entidadBancariaDAO.read(idEntidadBancariaBuscarda);
 
@@ -25,11 +25,9 @@
     String codigo = entidadBancariaBuscada.getCodigoEntidadBancaria();
     String nombre = entidadBancariaBuscada.getNombre();
     TipoEntidadBancaria tipoEntidadBancaria = entidadBancariaBuscada.getTipoEntidadBancaria();
-    
-    //Para pasar un dato por el Get de la URL 
-    
-    String nombreB = request.getParameter("nombre");    
-    
+
+
+
     //Mostrar muchas entidades bancarias    
 
     List<EntidadBancaria> entidadesBancarias = new ArrayList<EntidadBancaria>();
@@ -44,10 +42,18 @@
      out.println(entidadBancaria.getTipoEntidadBancaria());
      out.println(entidadBancaria.getCif());
      }*/
-    
+
     //Prueba con Data Source
-    
-    
+
+
+
+    //Para pasar un dato por el Get de la URL 
+
+    String nombreB = request.getParameter("nombre");
+     
+    EntidadBancaria entidadBancariaBuscadaGet = new EntidadBancaria();
+    entidadBancariaBuscadaGet = entidadBancariaDAO.findByNombre(nombreB);
+
 
 %>
 
@@ -62,6 +68,30 @@
     </head>
     <body>
         <h1>Entidades Bancarias</h1>
+
+        <table class="table">
+            <th>IDENTIFICADOR</th>
+            <th>CODIGO</th>
+            <th>NOMBRE</th>
+            <th>TIPO</th>
+            <th>CIF</th>
+                <%
+
+                    for (EntidadBancaria entidadBancaria : entidadesBancarias) {
+                %>
+            <tr>
+                <td><%= entidadBancaria.getIdEntidadBancaria()%></td>
+                <td><%= entidadBancaria.getCodigoEntidadBancaria()%></td>
+                <td><%= entidadBancaria.getNombre()%></td>
+                <td><%= entidadBancaria.getTipoEntidadBancaria()%></td>       
+                <td><%= entidadBancaria.getCif()%></td>
+            </tr>
+            <%
+                }
+            %>
+        </table>
+        <hr>
+        <h1>Entidad Bancaria Buscada Por Get de URL</h1>
         <h3><%=nombreB%></h3>
         <table class="table">
             <th>IDENTIFICADOR</th>
@@ -69,20 +99,13 @@
             <th>NOMBRE</th>
             <th>TIPO</th>
             <th>CIF</th>
-            <%
-                
-                for (EntidadBancaria entidadBancaria : entidadesBancarias) {
-            %>
             <tr>
-                <td>Identificador:<%= entidadBancaria.getIdEntidadBancaria()%></td>
-                <td>Codigo:<%= entidadBancaria.getCodigoEntidadBancaria()%></td>
-                <td>Nombre:<%= entidadBancaria.getNombre()%></td>
-                <td>Tipo:<%= entidadBancaria.getTipoEntidadBancaria()%></td>       
-                <td>Cif:<%= entidadBancaria.getCif()%></td>
+                <td><%= entidadBancariaBuscadaGet.getIdEntidadBancaria()%></td>
+                <td><%= entidadBancariaBuscadaGet.getCodigoEntidadBancaria()%></td>
+                <td><%= entidadBancariaBuscadaGet.getNombre()%></td>
+                <td><%= entidadBancariaBuscadaGet.getTipoEntidadBancaria()%></td>       
+                <td><%= entidadBancariaBuscadaGet.getCif()%></td>
             </tr>
-            <%
-                }
-            %>
         </table>
     </body>
 </html>
