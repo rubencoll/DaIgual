@@ -19,8 +19,8 @@ public interface ConnectionFactory {
     
 
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException, ServletException;
-    public void close(Connection connection)throws SQLException, ClassNotFoundException;
+    public Connection getConnection();
+    public void close(Connection connection);
    
 
 }

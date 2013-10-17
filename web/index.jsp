@@ -15,7 +15,8 @@
     int idEntidadBancariaBuscarda = 3;
 
     EntidadBancariaDAO entidadBancariaDAO = new EntidadBancariaDAOImplJDBC();
-
+    //GenericDAO genericDao = new EntidadBancariaDAOImplJDBC();
+    
     EntidadBancaria entidadBancariaBuscada = new EntidadBancaria();
     entidadBancariaBuscada = entidadBancariaDAO.read(idEntidadBancariaBuscarda);
 
@@ -24,7 +25,11 @@
     String codigo = entidadBancariaBuscada.getCodigoEntidadBancaria();
     String nombre = entidadBancariaBuscada.getNombre();
     TipoEntidadBancaria tipoEntidadBancaria = entidadBancariaBuscada.getTipoEntidadBancaria();
-
+    
+    //Para pasar un dato por el Get de la URL 
+    
+    String nombreB = request.getParameter("nombre");    
+    
     //Mostrar muchas entidades bancarias    
 
     List<EntidadBancaria> entidadesBancarias = new ArrayList<EntidadBancaria>();
@@ -57,7 +62,7 @@
     </head>
     <body>
         <h1>Entidades Bancarias</h1>
-
+        <h3><%=nombreB%></h3>
         <table class="table">
             <th>IDENTIFICADOR</th>
             <th>CODIGO</th>
@@ -65,7 +70,7 @@
             <th>TIPO</th>
             <th>CIF</th>
             <%
-
+                
                 for (EntidadBancaria entidadBancaria : entidadesBancarias) {
             %>
             <tr>

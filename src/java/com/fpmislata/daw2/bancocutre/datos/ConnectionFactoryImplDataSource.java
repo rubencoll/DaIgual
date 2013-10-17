@@ -17,13 +17,13 @@ import javax.sql.DataSource;
 public class ConnectionFactoryImplDataSource implements ConnectionFactory {
 
     @Override
-    public Connection getConnection() throws SQLException, ServletException {
-        DataSource datasource = null;
-        try {
+    public Connection getConnection() {
 
+        try {
+            DataSource datasource = null;
             InitialContext initialContext = new InitialContext();
             if (initialContext == null) {
-                
+
                 throw new Exception("There was no InitialContext in DBBroker. We're about to have some problems.");
             }
 
@@ -31,22 +31,23 @@ public class ConnectionFactoryImplDataSource implements ConnectionFactory {
             datasource = (DataSource) initialContext.lookup("java:/comp/env/jdbc/banco");
 
             if (datasource == null) {
-                
+
                 throw new Exception("Could not find our DataSource in DBBroker. We're about to have problems.");
             }
-        } catch (Exception e) {
-            throw new ServletException(e.getMessage());
+
+            return datasource.getConnection();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
-        return datasource.getConnection();
+
     }
 
     @Override
-    public void close(Connection connection) throws SQLException, ClassNotFoundException {
+    public void close(Connection connection) {
         try {
             connection.close();
-        } catch (Exception e) {
-            System.err.println("DBBroker: Threw an exception closing a database connection");
-            e.printStackTrace();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

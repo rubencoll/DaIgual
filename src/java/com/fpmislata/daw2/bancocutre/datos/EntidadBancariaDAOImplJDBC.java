@@ -24,10 +24,10 @@ import javax.servlet.ServletException;
 //  Database credentials
 public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
 
+    ConnectionFactory connectionFactory = new ConnectionFactoryImplDataSource();
     //ConnectionFactory connectionFactory = new ConnectionFactoryImplJDBC();
-    ConnectionFactory connectionFactory = new ConnectionFactoryImplJDBC();
 
-    public EntidadBancariaDAOImplJDBC() throws ClassNotFoundException, SQLException {
+    public EntidadBancariaDAOImplJDBC() {
     }
 
     @Override
