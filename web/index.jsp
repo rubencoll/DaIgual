@@ -77,6 +77,9 @@
                 border-radius: 20px;
                 background-color: skyblue;
             }
+            th {
+                background-color: skyblue ;
+            }
         </style>
     </head>
     <body>
